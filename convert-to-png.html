@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SVG to PNG Converter - Tab Nudge Icons</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .icon-container { margin: 20px 0; border: 1px solid #ccc; padding: 15px; }
+        canvas { border: 1px solid #eee; margin: 10px; }
+        button { margin: 5px; padding: 10px; }
+        .download-link { display: inline-block; margin: 5px; padding: 5px 10px; background: #007cba; color: white; text-decoration: none; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>Tab Nudge Icon Generator</h1>
+    <p>This tool converts the SVG icons to PNG format for the Chrome extension.</p>
+    
+    <div id="icons-container"></div>
+    
+    <script>
+        const svgIcons = {
+            16: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="16" height="16" rx="2.67" fill="#2563eb"/>
+                <g>
+                    <path d="M4 5.33L12 5.33M4 8L12 8M4 10.67L12 10.67" stroke="white" stroke-width="1" stroke-linecap="round"/>
+                    <circle cx="12.8" cy="3.2" r="1.33" fill="#ef4444"/>
+                </g>
+            </svg>`,
+            32: `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="32" height="32" rx="5.33" fill="#2563eb"/>
+                <g>
+                    <path d="M8 10.67L24 10.67M8 16L24 16M8 21.33L24 21.33" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="25.6" cy="6.4" r="2.67" fill="#ef4444"/>
+                </g>
+            </svg>`,
+            48: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="48" height="48" rx="8" fill="#2563eb"/>
+                <g>
+                    <path d="M12 16L36 16M12 24L36 24M12 32L36 32" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="38.4" cy="9.6" r="4" fill="#ef4444"/>
+                </g>
+            </svg>`,
+            128: `<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="128" height="128" rx="21.33" fill="#2563eb"/>
+                <g>
+                    <path d="M32 42.67L96 42.67M32 64L96 64M32 85.33L96 85.33" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                    <circle cx="102.4" cy="25.6" r="10.67" fill="#ef4444"/>
+                </g>
+            </svg>`
+        };
+
+        function createPNGFromSVG(svgString, size) {
+            return new Promise((resolve) => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                
+                const img = new Image();
+                const svgBlob = new Blob([svgString], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(svgBlob);
+                
+                img.onload = function() {
+                    ctx.clearRect(0, 0, size, size);
+                    ctx.drawImage(img, 0, 0, size, size);
+                    URL.revokeObjectURL(url);
+                    resolve(canvas.toDataURL('image/png'));
+                };
+                
+                img.src = url;
+            });
+        }
+
+        async function generateIcons() {
+            const container = document.getElementById('icons-container');
+            
+            for (const [size, svgString] of Object.entries(svgIcons)) {
+                const div = document.createElement('div');
+                div.className = 'icon-container';
+                div.innerHTML = `<h3>Icon ${size}x${size}</h3>`;
+                
+                // Show SVG preview
+                const svgDiv = document.createElement('div');
+                svgDiv.innerHTML = svgString;
+                div.appendChild(svgDiv);
+                
+                // Generate PNG
+                const pngDataUrl = await createPNGFromSVG(svgString, parseInt(size));
+                
+                // Show PNG preview
+                const canvas = document.createElement('canvas');
+                canvas.width = parseInt(size);
+                canvas.height = parseInt(size);
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+                img.onload = function() {
+                    ctx.drawImage(img, 0, 0);
+                };
+                img.src = pngDataUrl;
+                div.appendChild(canvas);
+                
+                // Create download link
+                const downloadLink = document.createElement('a');
+                downloadLink.href = pngDataUrl;
+                downloadLink.download = `icon-${size}.png`;
+                downloadLink.className = 'download-link';
+                downloadLink.textContent = `Download icon-${size}.png`;
+                div.appendChild(downloadLink);
+                
+                container.appendChild(div);
+            }
+        }
+
+        generateIcons();
+    </script>
+</body>
+</html>
