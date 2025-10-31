@@ -1,0 +1,79 @@
+{
+  "manifest_version": 3,
+  "name": "Tab Nudge",
+  "version": "0.1.0",
+  "description": "Smart tab management to reduce browser overload with intelligent notifications and cleanup actions",
+  
+  "permissions": [
+    "tabs",
+    "storage",
+    "notifications",
+    "alarms",
+    "sessions"
+  ],
+  
+  "host_permissions": [],
+  
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Tab Nudge",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  
+  
+  "options_page": "options.html",
+  
+  "commands": {
+    "open_actions": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+T"
+      },
+      "description": "Open Tab Nudge actions panel"
+    },
+    "open_dashboard": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+A"
+      },
+      "description": "Open Tab Nudge dashboard"
+    },
+    "close_oldest": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+O"
+      },
+      "description": "Close oldest tabs"
+    },
+    "close_duplicates": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+D"
+      },
+      "description": "Close duplicate tabs"
+    },
+    "snooze": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S"
+      },
+      "description": "Snooze notifications"
+    }
+  },
+  
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}
