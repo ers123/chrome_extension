@@ -204,12 +204,26 @@ Uses shadcn/ui components for consistent, accessible design:
 
 ## 📞 Support
 
-For issues and feature requests, please:
+- Issues & bugs: use GitHub Issues on this repository.
+- Please include:
+  - Chrome version and OS
+  - Steps to reproduce
+  - What you expected vs. what happened
 
-1. Check existing issues in the repository
-2. Provide detailed reproduction steps
-3. Include Chrome version and OS details
-4. Attach relevant console logs if available
+## 🔐 Privacy & Security
+
+- Privacy Policy: see `docs/privacy-policy.md` (hosted URL should be used in Chrome Web Store listing).
+- Security reports: see `SECURITY.md` for how to report vulnerabilities responsibly.
+
+## 📦 Releases
+
+- Current stable: `1.0.0`
+- Build & package locally:
+  ```bash
+  npm install
+  npm run package
+  ```
+- This generates `tab-nudge-v1.0.0.zip` ready for Chrome Web Store upload.
 
 ## 📄 License
 

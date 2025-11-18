@@ -21,8 +21,11 @@ const version = packageJson.version
 console.log(`📦 Creating extension package (v${version})...`)
 const zipName = `tab-nudge-v${version}.zip`
 
+// Remove unwanted OS metadata files
+execSync("find dist -name '.DS_Store' -delete || true")
+
 try {
-  execSync(`cd dist && zip -r ../${zipName} .`, { stdio: 'inherit' })
+  execSync(`cd dist && zip -r ../${zipName} . -x '*.DS_Store'`, { stdio: 'inherit' })
   
   // Generate checksum
   const checksum = execSync(`shasum -a 256 ${zipName}`).toString().trim()

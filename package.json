@@ -1,6 +1,6 @@
 {
   "name": "tab-nudge",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Chrome extension to reduce browser tab overload with smart notifications and cleanup actions",
   "type": "module",
   "scripts": {
